@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TCI Bâtiment – Construction de Gros Œuvre</title>
+  <meta name="description" content="TCI Bâtiment, expert en construction de gros œuvre : fondations, structures béton, maçonnerie. Contactez-nous pour vos projets de construction." />
+  <meta name="keywords" content="construction gros oeuvre, béton, fondations, maçonnerie, TCI bâtiment" />
+  <meta property="og:title" content="TCI Bâtiment – Construction de Gros Œuvre" />
+  <meta property="og:description" content="Expert en construction de gros œuvre. Fondations, structures béton, terrassement." />
+  <meta property="og:type" content="website" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════
+       NAVIGATION
+  ═══════════════════════════════════════════════════════ -->
+  <nav class="navbar" id="navbar" role="navigation" aria-label="Navigation principale">
+    <div class="nav-inner">
+
+      <a href="#accueil" class="nav-logo" aria-label="TCI Bâtiment – Accueil">
+        <img src="assets/logo.png" alt="Logo TCI Bâtiment" style="height:80px;" />
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="#savoir-faire">Savoir-faire</a></li>
+        <li><a href="#projets">Nos Projets</a></li>
+        <li><a href="#partenaires">Partenaires</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+
+
+      <button class="hamburger" id="hamburger" aria-label="Menu mobile" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu" role="menu">
+    <a href="#savoir-faire" role="menuitem">Savoir-faire</a>
+    <a href="#projets" role="menuitem">Nos Projets</a>
+    <a href="#partenaires" role="menuitem">Partenaires</a>
+    <a href="#contact" role="menuitem">Contact</a>
+    <a href="#contact" class="btn btn-primary" style="margin-top:8px;">Nous contacter</a>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════════════════════ -->
+  <section class="hero" id="accueil" aria-label="Section principale">
+    <div class="hero-video-bg" aria-hidden="true"></div>
+    <div class="hero-bg" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">Experts en Gros Œuvre</div>
+
+      <h1>Construire <span>solide</span>,<br>bâtir <span>durable</span>.</h1>
+
+      <p class="hero-sub">
+        TCI Bâtiment réalise vos projets de construction de gros œuvre avec rigueur,
+        expertise et un engagement total pour la qualité.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#projets" class="btn btn-primary" id="hero-projects-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></svg>
+          Voir nos réalisations
+        </a>
+        <a href="#contact" class="btn btn-outline" id="hero-contact-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Nous contacter
+        </a>
+      </div>
+
+      <div class="hero-stats" aria-label="Chiffres clés">
+        <div class="hero-stat">
+          <strong><span data-count="15" data-suffix="+">0+</span></strong>
+          <small>Années d'expérience</small>
+        </div>
+        <div class="hero-stat">
+          <strong><span data-count="280" data-suffix="+">0+</span></strong>
+          <small>Projets réalisés</small>
+        </div>
+
+        <div class="hero-stat">
+          <strong><span data-count="40" data-suffix="+">0+</span></strong>
+          <small>Partenaires de confiance</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-cue" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      Défiler
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       SAVOIR-FAIRE
+  ═══════════════════════════════════════════════════════ -->
+  <section class="section" id="savoir-faire" aria-labelledby="savoir-faire-title">
+    <div class="container">
+      <div class="reveal">
+        <span class="section-label">Notre expertise</span>
+        <h2 class="section-title" id="savoir-faire-title">Ce que nous savons faire</h2>
+        <p class="section-subtitle">
+          Du terrassement à la mise hors d'eau, TCI Bâtiment maîtrise toutes les étapes
+          du gros œuvre pour garantir des ouvrages pérennes et conformes.
+        </p>
+      </div>
+
+      <div class="expertises-grid">
+
+        <article class="expertise-card reveal reveal-delay-1">
+          <div class="expertise-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h3>Fondations & Terrassement</h3>
+          <p>Étude de sol, excavation, fondations superficielles et profondes (pieux, radiers). Nous préparons les bases solides de chaque ouvrage.</p>
+        </article>
+
+        <article class="expertise-card reveal reveal-delay-2">
+          <div class="expertise-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3>Structures Béton Armé</h3>
+          <p>Coffrage, ferraillage et coulage de dalles, poteaux, poutres et voiles béton. Exécution soignée respectant les normes DTU et Eurocodes.</p>
+        </article>
+
+        <article class="expertise-card reveal reveal-delay-3">
+          <div class="expertise-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          </div>
+          <h3>Maçonnerie & Élévation</h3>
+          <p>Montage de murs en parpaing, brique et béton cellulaire. Réalisation des cloisons porteuses et des façades selon les plans d'architectes.</p>
+        </article>
+
+        <article class="expertise-card reveal reveal-delay-3">
+          <div class="expertise-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3>Pilotage & Suivi de Chantier</h3>
+          <p>Coordination des corps de métier, suivi de planning, reporting régulier et interface avec la maîtrise d'œuvre pour une livraison dans les délais.</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       GALERIE PROJETS
+  ═══════════════════════════════════════════════════════ -->
+  <section class="section section-alt" id="projets" aria-labelledby="projets-title">
+    <div class="container">
+      <div class="section-header reveal">
+        <div>
+          <span class="section-label">Réalisations</span>
+          <h2 class="section-title" id="projets-title">Nos derniers projets</h2>
+          <p class="section-subtitle">
+            Chaque chantier est une nouvelle démonstration de notre savoir-faire et
+            de notre exigence qualité.
+          </p>
+        </div>
+        <a href="#contact" class="btn btn-navy" id="projets-devis-btn">Nous contacter</a>
+      </div>
+
+      <!-- ══ GALERIE – pour ajouter un projet : copiez un bloc .project-card ══
+           1. Dupliquez un <article class="project-card"...>
+           2. Changez l'image src vers votre fichier dans assets/projects/
+           3. Mettez à jour data-title, la .project-tag et le texte
+           Pas besoin de toucher au CSS !
+      ══════════════════════════════════════════════════════════════════════════ -->
+      <div class="projects-grid reveal">
+
+        <article class="project-card" data-title="Immeuble résidentiel R+4 – Lyon" id="project-card-1">
+          <img src="assets/projects/project1.jpg" alt="Chantier immeuble résidentiel R+4 Lyon" loading="lazy" />
+          <div class="project-overlay">
+            <div class="project-info">
+              <span class="project-tag">Résidentiel</span>
+              <h3>Immeuble R+4 – Lyon</h3>
+              <p>Structure béton armé, 24 logements</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card" data-title="Fondations et dalle – Entrepôt logistique" id="project-card-2">
+          <img src="assets/projects/project2.jpg" alt="Fondations et dalle entrepôt logistique" loading="lazy" />
+          <div class="project-overlay">
+            <div class="project-info">
+              <span class="project-tag">Industriel</span>
+              <h3>Entrepôt logistique</h3>
+              <p>Fondations spéciales, radier béton</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card" data-title="Immeuble collectif R+6 – Grenoble" id="project-card-3">
+          <img src="assets/projects/project3.jpg" alt="Immeuble collectif R+6 Grenoble" loading="lazy" />
+          <div class="project-overlay">
+            <div class="project-info">
+              <span class="project-tag">Collectif</span>
+              <h3>Immeuble R+6 – Grenoble</h3>
+              <p>Gros œuvre complet, 48 logements</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card" data-title="Soutènement et terrassement – Parking souterrain" id="project-card-4">
+          <img src="assets/projects/project4.jpg" alt="Soutènement et terrassement parking souterrain" loading="lazy" />
+          <div class="project-overlay">
+            <div class="project-info">
+              <span class="project-tag">Infrastructure</span>
+              <h3>Parking souterrain</h3>
+              <p>Paroi berlinoise, 3 niveaux</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card" data-title="Bâtiment commercial – Structure mixte" id="project-card-5">
+          <img src="assets/projects/project5.jpg" alt="Bâtiment commercial structure mixte" loading="lazy" />
+          <div class="project-overlay">
+            <div class="project-info">
+              <span class="project-tag">Commercial</span>
+              <h3>Centre commercial</h3>
+              <p>Structure mixte béton-métal</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card" data-title="Lotissement pavillonnaire – 18 maisons" id="project-card-6">
+          <img src="assets/projects/project6.jpg" alt="Lotissement pavillonnaire 18 maisons" loading="lazy" />
+          <div class="project-overlay">
+            <div class="project-info">
+              <span class="project-tag">Pavillonnaire</span>
+              <h3>Lotissement – 18 villas</h3>
+              <p>Gros œuvre maisons individuelles</p>
+            </div>
+          </div>
+        </article>
+
+      </div>
+      <!-- ══ FIN GALERIE ══════════════════════════════════════════════════════ -->
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       PARTENAIRES
+  ═══════════════════════════════════════════════════════ -->
+  <section class="section partners-section" id="partenaires" aria-labelledby="partenaires-title">
+    <div class="container">
+      <div class="reveal" style="text-align:center; max-width:600px; margin:0 auto;">
+        <span class="section-label">Ils nous font confiance</span>
+        <h2 class="section-title" id="partenaires-title">Nos partenaires</h2>
+        <p class="section-subtitle" style="margin:0 auto;">
+          Promoteurs, architectes, maîtres d'ouvrage – nous collaborons avec des acteurs
+          de référence qui nous renouvellent leur confiance chantier après chantier.
+        </p>
+      </div>
+    </div>
+
+    <!-- ══ PARTENAIRES – pour ajouter un partenaire :
+         1. Copiez un bloc .partner-card dans les DEUX lignes (track-1 ET track-2)
+         2. Remplacez l'image src par votre logo dans assets/partners/
+         3. Changez le nom dans <span>Nom Partenaire</span>
+         Si vous avez le fichier image : <img src="assets/partners/logo-nom.jpg" alt="Nom">
+    ══════════════════════════════════════════════════════════════════════════ -->
+    <div class="partners-track-wrapper" style="margin-top:56px;" aria-label="Logos partenaires">
+      <div class="partners-track" id="partners-track-1">
+
+        <!-- Partner 1 -->
+        <div class="partner-card" id="partner-card-1" title="Partenaire 1">
+          <div class="partner-logo-placeholder">
+            <div class="partner-svg-logo">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:rgba(255,255,255,.6)"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              <span>Partenaire 1</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Partner 2 -->
+        <div class="partner-card" id="partner-card-2" title="Partenaire 2">
+          <div class="partner-logo-placeholder">
+            <div class="partner-svg-logo">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:rgba(255,255,255,.6)"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              <span>Partenaire 2</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Partner 3 -->
+        <div class="partner-card" id="partner-card-3" title="Partenaire 3">
+          <div class="partner-logo-placeholder">
+            <div class="partner-svg-logo">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:rgba(255,255,255,.6)"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <span>Partenaire 3</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Partner 4 -->
+        <div class="partner-card" id="partner-card-4" title="Partenaire 4">
+          <div class="partner-logo-placeholder">
+            <div class="partner-svg-logo">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:rgba(255,255,255,.6)"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              <span>Partenaire 4</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Partner 5 -->
+        <div class="partner-card" id="partner-card-5" title="Partenaire 5">
+          <div class="partner-logo-placeholder">
+            <div class="partner-svg-logo">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:rgba(255,255,255,.6)"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>Partenaire 5</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Partner 6 -->
+        <div class="partner-card" id="partner-card-6" title="Partenaire 6">
+          <div class="partner-logo-placeholder">
+            <div class="partner-svg-logo">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:rgba(255,255,255,.6)"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <span>Partenaire 6</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Duplicate set for infinite loop -->
+        <div class="partner-card" title="Partenaire 1"><div class="partner-logo-placeholder"><div class="partner-svg-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:rgba(255,255,255,.6)"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Partenaire 1</span></div></div></div>
+        <div class="partner-card" title="Partenaire 2"><div class="partner-logo-placeholder"><div class="partner-svg-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:rgba(255,255,255,.6)"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg><span>Partenaire 2</span></div></div></div>
+        <div class="partner-card" title="Partenaire 3"><div class="partner-logo-placeholder"><div class="partner-svg-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:rgba(255,255,255,.6)"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>Partenaire 3</span></div></div></div>
+        <div class="partner-card" title="Partenaire 4"><div class="partner-logo-placeholder"><div class="partner-svg-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:rgba(255,255,255,.6)"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><span>Partenaire 4</span></div></div></div>
+        <div class="partner-card" title="Partenaire 5"><div class="partner-logo-placeholder"><div class="partner-svg-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:rgba(255,255,255,.6)"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Partenaire 5</span></div></div></div>
+        <div class="partner-card" title="Partenaire 6"><div class="partner-logo-placeholder"><div class="partner-svg-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:rgba(255,255,255,.6)"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Partenaire 6</span></div></div></div>
+      </div>
+    </div>
+    <!-- ══ FIN PARTENAIRES ══════════════════════════════════════════════════ -->
+
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       CONTACT
+  ═══════════════════════════════════════════════════════ -->
+  <section class="section" id="contact" aria-labelledby="contact-title">
+    <div class="container">
+      <div class="reveal">
+        <span class="section-label">Parlons de votre projet</span>
+        <h2 class="section-title" id="contact-title">Contactez-nous</h2>
+        <p class="section-subtitle">
+          Un projet ? Une question ? Notre équipe vous répond sous 48h.
+        </p>
+      </div>
+
+      <div class="contact-layout">
+
+        <!-- Infos -->
+        <div class="contact-info reveal">
+          <div class="contact-info-block">
+            <h3>TCI Bâtiment</h3>
+            <p>Expert en construction de gros œuvre, nous accompagnons promoteurs,
+               architectes et maîtres d'ouvrage de la conception à la livraison.</p>
+          </div>
+
+          <div class="contact-details-list">
+            <a href="tel:+33164430300" class="contact-detail" id="contact-phone-link">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.13 12 19.79 19.79 0 0 1 1.07 3.18 2 2 0 0 1 3.06 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              01 64 43 03 00
+            </a>
+
+            <a href="https://www.google.com/maps/search/?api=1&query=20+rue+Jean+Cocteau+77340+Pontault-Combault" target="_blank" rel="noopener noreferrer" class="contact-detail" id="contact-address-link">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>20 rue Jean Cocteau<br><small style="color:inherit;opacity:.8;">77340 Pontault-Combault</small></span>
+            </a>
+          </div>
+
+          <div class="contact-info-block" style="background:rgba(27,58,107,.05); border-radius:12px; padding:20px; border-left:3px solid var(--coral);">
+            <h3 style="font-size:1rem;">⏱️ Délai de réponse</h3>
+            <p>Nous nous engageons à répondre à toutes les demandes <strong>sous 48h ouvrées</strong>. Pour les urgences, privilégiez l'appel direct.</p>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div class="contact-form reveal reveal-delay-2">
+          <form id="contactForm" novalidate aria-label="Formulaire de contact">
+            <div class="form-groups">
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="nom">Nom complet *</label>
+                  <input type="text" id="nom" name="nom" placeholder="Jean Dupont" autocomplete="name" required />
+                </div>
+                <div class="form-group">
+                  <label for="email">Email *</label>
+                  <input type="email" id="email" name="email" placeholder="jean@exemple.fr" autocomplete="email" required />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="telephone">Téléphone</label>
+                <input type="tel" id="telephone" name="telephone" placeholder="+33 6 00 00 00 00" autocomplete="tel" />
+              </div>
+
+              <div class="form-group">
+                <label for="sujet">Sujet *</label>
+                <input type="text" id="sujet" name="sujet" placeholder="Demande de devis – Immeuble R+3" required />
+              </div>
+
+              <div class="form-group">
+                <label for="message">Votre message *</label>
+                <textarea id="message" name="message" placeholder="Décrivez votre projet, sa localisation, le calendrier souhaité..." required></textarea>
+              </div>
+
+              <div id="formSuccess" class="form-success" role="status">
+                ✅ Votre client de messagerie va s'ouvrir. Merci pour votre message !
+              </div>
+
+              <button type="submit" class="btn btn-primary form-submit" id="submit-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Envoyer le message
+              </button>
+
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+
+        <div class="footer-brand">
+          <img src="assets/logo.png" alt="Logo TCI Bâtiment" style="height:auto; max-height:60px; max-width:160px; object-fit:contain; width:auto;" />
+          <p>Expert en construction de gros œuvre depuis plus de 15 ans. Fondations, béton armé, maçonnerie – nous bâtissons avec vous.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="#accueil">Accueil</a></li>
+            <li><a href="#savoir-faire">Savoir-faire</a></li>
+            <li><a href="#projets">Nos Projets</a></li>
+            <li><a href="#partenaires">Partenaires</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Expertises</h4>
+          <ul>
+            <li><a href="#savoir-faire">Fondations</a></li>
+            <li><a href="#savoir-faire">Béton armé</a></li>
+            <li><a href="#savoir-faire">Maçonnerie</a></li>
+            <li><a href="#savoir-faire">Charpente</a></li>
+            <li><a href="#savoir-faire">VRD</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:+33164430300">01 64 43 03 00</a></li>
+            <li><a href="https://www.google.com/maps/search/?api=1&query=20+rue+Jean+Cocteau+77340+Pontault-Combault" target="_blank" rel="noopener noreferrer">20 rue Jean Cocteau<br>77340 Pontault-Combault</a></li>
+            <li><a href="#contact">Formulaire de contact</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <hr class="footer-divider" />
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 TCI Bâtiment. Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
