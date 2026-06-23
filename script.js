@@ -104,35 +104,34 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-/* ── Counter animation (hero stats) ──────────────────────── */
-function animateCounters() {
-  document.querySelectorAll('[data-count]').forEach(el => {
-    const target = parseInt(el.getAttribute('data-count'));
-    const suffix = el.getAttribute('data-suffix') || '';
-    const duration = 1600;
-    const start = performance.now();
+/* ── Counter animation (stats) ─────────────────────────── */
+function animateCounter(el) {
+  const target = parseInt(el.getAttribute('data-count'));
+  const suffix = el.getAttribute('data-suffix') || '';
+  const duration = 1600;
+  const start = performance.now();
 
-    function update(now) {
-      const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.round(eased * target) + suffix;
-      if (progress < 1) requestAnimationFrame(update);
+  function update(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(eased * target).toLocaleString('fr-FR') + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      animateCounter(entry.target);
+      counterObserver.unobserve(entry.target);
     }
-    requestAnimationFrame(update);
   });
-}
+}, { threshold: 0.15 });
 
-// Trigger counters when hero stats come into view
-const statsEl = document.querySelector('.hero-stats');
-if (statsEl) {
-  const statsObserver = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting) {
-      animateCounters();
-      statsObserver.disconnect();
-    }
-  }, { threshold: 0.5 });
-  statsObserver.observe(statsEl);
-}
+document.querySelectorAll('[data-count]').forEach(el => {
+  counterObserver.observe(el);
+});
 
 /* ── Project lightbox (simple) ────────────────────────────── */
 document.querySelectorAll('.project-card[data-title]').forEach(card => {
