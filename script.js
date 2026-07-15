@@ -4,25 +4,29 @@
 
 /* ── Navbar scroll effect ─────────────────────────────────── */
 const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-  navbar.classList.toggle('scrolled', window.scrollY > 40);
-});
+if (navbar) {
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+}
 
 /* ── Mobile menu ──────────────────────────────────────────── */
-const hamburger    = document.getElementById('hamburger');
-const mobileMenu   = document.getElementById('mobileMenu');
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
 
-hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('open');
-  mobileMenu.classList.toggle('open');
-});
-
-mobileMenu.querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', () => {
-    hamburger.classList.remove('open');
-    mobileMenu.classList.remove('open');
+if (hamburger && mobileMenu) {
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
   });
-});
+
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    });
+  });
+}
 
 /* ── Scroll reveal ────────────────────────────────────────── */
 const revealObserver = new IntersectionObserver((entries) => {
@@ -39,12 +43,12 @@ document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 /* ── Contact form ─────────────────────────────────────────── */
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
-  contactForm.addEventListener('submit', function(e) {
+  contactForm.addEventListener('submit', function (e) {
     e.preventDefault();
 
-    const nom     = document.getElementById('nom').value.trim();
-    const email   = document.getElementById('email').value.trim();
-    const sujet   = document.getElementById('sujet').value.trim();
+    const nom = document.getElementById('nom').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const sujet = document.getElementById('sujet').value.trim();
     const message = document.getElementById('message').value.trim();
 
     if (!nom || !email || !sujet || !message) {
@@ -68,11 +72,14 @@ if (contactForm) {
     window.location.href = mailtoLink;
 
     // Show success message
-    document.getElementById('formSuccess').style.display = 'block';
+    const formSuccess = document.getElementById('formSuccess');
+    if (formSuccess) {
+      formSuccess.style.display = 'block';
+      setTimeout(() => {
+        formSuccess.style.display = 'none';
+      }, 5000);
+    }
     contactForm.reset();
-    setTimeout(() => {
-      document.getElementById('formSuccess').style.display = 'none';
-    }, 5000);
   });
 }
 
@@ -94,7 +101,7 @@ function showAlert(msg, type) {
 
 /* ── Smooth scroll for nav links ──────────────────────────── */
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
+  anchor.addEventListener('click', function (e) {
     const target = document.querySelector(this.getAttribute('href'));
     if (target) {
       e.preventDefault();
@@ -104,41 +111,42 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-/* ── Counter animation (stats) ─────────────────────────── */
-function animateCounter(el) {
-  const target = parseInt(el.getAttribute('data-count'));
-  const suffix = el.getAttribute('data-suffix') || '';
-  const duration = 1600;
-  const start = performance.now();
+/* ── Counter animation (hero stats) ──────────────────────── */
+function animateCounters() {
+  document.querySelectorAll('[data-count]').forEach(el => {
+    const target = parseInt(el.getAttribute('data-count'));
+    const suffix = el.getAttribute('data-suffix') || '';
+    const duration = 1600;
+    const start = performance.now();
 
-  function update(now) {
-    const progress = Math.min((now - start) / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3);
-    el.textContent = Math.round(eased * target).toLocaleString('fr-FR') + suffix;
-    if (progress < 1) requestAnimationFrame(update);
-  }
-  requestAnimationFrame(update);
+    function update(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(eased * target) + suffix;
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  });
 }
 
-const counterObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      animateCounter(entry.target);
-      counterObserver.unobserve(entry.target);
+// Trigger counters when hero stats come into view
+const statsEl = document.querySelector('.hero-stats');
+if (statsEl) {
+  const statsObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      animateCounters();
+      statsObserver.disconnect();
     }
-  });
-}, { threshold: 0.15 });
-
-document.querySelectorAll('[data-count]').forEach(el => {
-  counterObserver.observe(el);
-});
+  }, { threshold: 0.5 });
+  statsObserver.observe(statsEl);
+}
 
 /* ── Project lightbox (simple) ────────────────────────────── */
 document.querySelectorAll('.project-card[data-title]').forEach(card => {
   card.addEventListener('click', () => {
     const img = card.querySelector('img');
     const title = card.dataset.title || '';
-    openLightbox(img.src, title);
+    if (img) openLightbox(img.src, title);
   });
 });
 
@@ -165,3 +173,66 @@ function openLightbox(src, caption) {
 const style = document.createElement('style');
 style.textContent = `@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }`;
 document.head.appendChild(style);
+
+/* ── DOM Loaded Block (Specs & Gallery Modal) ─────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+
+  // Display project specs from data-specs attribute
+  document.querySelectorAll('.project-card').forEach(card => {
+    const specs = card.dataset.specs;
+    if (specs) {
+      const infoDiv = card.querySelector('.project-info');
+      if (infoDiv) {
+        const specsEl = document.createElement('p');
+        specsEl.className = 'project-specs';
+        specsEl.style.marginTop = '8px';
+        specsEl.style.fontSize = '0.9rem';
+        specsEl.style.color = '#fff';
+        specsEl.textContent = specs;
+        infoDiv.appendChild(specsEl);
+      }
+    }
+  });
+
+  /* ------------------------------------------------------------------
+     Image gallery – open modal on project click
+  ------------------------------------------------------------------- */
+  const modal = document.getElementById('gallery-modal');
+  const modalImg = document.getElementById('gallery-img');
+  const modalCaption = document.getElementById('gallery-caption');
+  const closeBtn = modal ? modal.querySelector('.close-btn') : null;
+
+  // Open modal with the clicked project's image
+  function openGallery(event) {
+    const card = event.currentTarget;
+    const img = card.querySelector('img');
+    if (!img) return;
+    if (modalImg) modalImg.src = img.src;
+    // Use the project's title or the alt attribute as caption
+    if (modalCaption) modalCaption.textContent = img.alt || card.dataset.title || '';
+    if (modal) modal.classList.add('is-open');
+  }
+
+  // Close modal (click on X or background)
+  function closeGallery() {
+    if (modal) modal.classList.remove('is-open');
+  }
+
+  // Attach click listeners to every project card
+  document.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('click', openGallery);
+  });
+
+  // Close on X button
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeGallery);
+  }
+
+  // Also close when clicking outside the image (on the overlay)
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeGallery();
+    });
+  }
+
+}); // end of DOMContentLoaded
