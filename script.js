@@ -99,75 +99,55 @@ function showAlert(msg, type) {
   setTimeout(() => el.remove(), 3500);
 }
 
-/* ── Smooth scroll for nav links ──────────────────────────── */
+/* ── Smooth scroll for nav links (Sécurisé contre les plantages DOM) ── */
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      const top = target.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({ top, behavior: 'smooth' });
+    const href = this.getAttribute('href');
+
+    // Évite de faire planter querySelector avec un href vide ou juste "#"
+    if (href === '#' || !href) return;
+
+    try {
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        const top = target.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    } catch (err) {
+      console.warn("Sélecteur d'ancre invalide ou ignoré :", href);
     }
   });
 });
 
-/* ── Counter animation (hero stats) ──────────────────────── */
-function animateCounters() {
-  document.querySelectorAll('[data-count]').forEach(el => {
-    const target = parseInt(el.getAttribute('data-count'));
-    const suffix = el.getAttribute('data-suffix') || '';
-    const duration = 1600;
-    const start = performance.now();
+/* ── Counter animation (stats) ─────────────────────────── */
+function animateCounter(el) {
+  const target = parseInt(el.getAttribute('data-count'));
+  const suffix = el.getAttribute('data-suffix') || '';
+  const duration = 1600;
+  const start = performance.now();
 
-    function update(now) {
-      const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.round(eased * target) + suffix;
-      if (progress < 1) requestAnimationFrame(update);
-    }
-    requestAnimationFrame(update);
-  });
+  function update(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(eased * target).toLocaleString('fr-FR') + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
 }
 
-// Trigger counters when hero stats come into view
-const statsEl = document.querySelector('.hero-stats');
-if (statsEl) {
-  const statsObserver = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting) {
-      animateCounters();
-      statsObserver.disconnect();
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      animateCounter(entry.target);
+      counterObserver.unobserve(entry.target);
     }
-  }, { threshold: 0.5 });
-  statsObserver.observe(statsEl);
-}
-
-/* ── Project lightbox (simple) ────────────────────────────── */
-document.querySelectorAll('.project-card[data-title]').forEach(card => {
-  card.addEventListener('click', () => {
-    const img = card.querySelector('img');
-    const title = card.dataset.title || '';
-    if (img) openLightbox(img.src, title);
   });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('[data-count]').forEach(el => {
+  counterObserver.observe(el);
 });
-
-function openLightbox(src, caption) {
-  const lb = document.createElement('div');
-  lb.style.cssText = `
-    position:fixed; inset:0; z-index:9999;
-    background:rgba(0,0,0,.88);
-    display:flex; flex-direction:column;
-    align-items:center; justify-content:center;
-    padding:24px; cursor:zoom-out;
-    animation: fadeIn .2s ease;
-  `;
-  lb.innerHTML = `
-    <img src="${src}" alt="${caption}"
-         style="max-width:90vw; max-height:80vh; border-radius:8px; box-shadow:0 24px 80px rgba(0,0,0,.5);">
-    ${caption ? `<p style="color:rgba(255,255,255,.8); margin-top:16px; font-size:.95rem;">${caption}</p>` : ''}
-  `;
-  lb.addEventListener('click', () => lb.remove());
-  document.body.appendChild(lb);
-}
 
 /* Fade in keyframe injection */
 const style = document.createElement('style');
@@ -195,40 +175,125 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ------------------------------------------------------------------
-     Image gallery – open modal on project click
+      Image gallery – open modal on project click with navigation
   ------------------------------------------------------------------- */
   const modal = document.getElementById('gallery-modal');
   const modalImg = document.getElementById('gallery-img');
   const modalCaption = document.getElementById('gallery-caption');
   const closeBtn = modal ? modal.querySelector('.close-btn') : null;
 
-  // Open modal with the clicked project's image
+  // Variables pour suivre la galerie active
+  let currentGalleryImages = [];
+  let currentImageIndex = 0;
+
+  // Création dynamique des boutons Précédent / Suivant si non présents
+  let prevBtn = modal ? modal.querySelector('.prev-btn') : null;
+  let nextBtn = modal ? modal.querySelector('.next-btn') : null;
+
+  if (modal && (!prevBtn || !nextBtn)) {
+    prevBtn = document.createElement('button');
+    prevBtn.className = 'gallery-nav prev-btn';
+    prevBtn.innerHTML = '&#10094;'; // Flèche gauche ❮
+    prevBtn.style.cssText = 'position:absolute; left:20px; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.5); color:white; border:none; font-size:2rem; padding:10px 15px; cursor:pointer; border-radius:4px; z-index:10000;';
+
+    nextBtn = document.createElement('button');
+    nextBtn.className = 'gallery-nav next-btn';
+    nextBtn.innerHTML = '&#10095;'; // Flèche droite ❯
+    nextBtn.style.cssText = 'position:absolute; right:20px; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.5); color:white; border:none; font-size:2rem; padding:10px 15px; cursor:pointer; border-radius:4px; z-index:10000;';
+
+    modal.appendChild(prevBtn);
+    modal.appendChild(nextBtn);
+  }
+
+  // Mettre à jour l'image affichée dans le modal
+  function updateModalImage() {
+    if (!modalImg || currentGalleryImages.length === 0) return;
+
+    const currentPath = currentGalleryImages[currentImageIndex];
+    modalImg.src = currentPath;
+
+    // Met à jour la légende (ex: "Rénovation Salon (1/3)")
+    if (modalCaption) {
+      const baseCaption = modalCaption.dataset.baseTitle || '';
+      modalCaption.textContent = `${baseCaption} (${currentImageIndex + 1}/${currentGalleryImages.length})`;
+    }
+
+    // Masquer les flèches s'il n'y a qu'une seule image
+    const displayStyle = currentGalleryImages.length > 1 ? 'block' : 'none';
+    if (prevBtn) prevBtn.style.display = displayStyle;
+    if (nextBtn) nextBtn.style.display = displayStyle;
+  }
+
+  // Ouvrir le modal en lisant la liste d'images personnalisée (100% compatible file://)
   function openGallery(event) {
     const card = event.currentTarget;
-    const img = card.querySelector('img');
-    if (!img) return;
-    if (modalImg) modalImg.src = img.src;
-    // Use the project's title or the alt attribute as caption
-    if (modalCaption) modalCaption.textContent = img.alt || card.dataset.title || '';
+    const galleryData = card.dataset.gallery; // Récupère la liste d'images
+    const mainImg = card.querySelector('img');
+    if (!mainImg) return;
+
+    currentGalleryImages = [];
+    currentImageIndex = 0;
+
+    if (modalCaption) {
+      modalCaption.dataset.baseTitle = mainImg.alt || card.dataset.title || '';
+    }
+
+    if (galleryData) {
+      // Découpe la chaîne séparée par des virgules en tableau JavaScript
+      currentGalleryImages = galleryData.split(',').map(src => src.trim());
+    }
+
+    // Si aucun data-gallery, on utilise l'image de couverture comme seule image
+    if (currentGalleryImages.length === 0) {
+      currentGalleryImages = [mainImg.src];
+    }
+
+    updateModalImage();
+
     if (modal) modal.classList.add('is-open');
   }
 
-  // Close modal (click on X or background)
   function closeGallery() {
     if (modal) modal.classList.remove('is-open');
   }
 
-  // Attach click listeners to every project card
+  // Fonctions de navigation
+  function nextImage() {
+    if (currentGalleryImages.length <= 1) return;
+    currentImageIndex = (currentImageIndex + 1) % currentGalleryImages.length;
+    updateModalImage();
+  }
+
+  function prevImage() {
+    if (currentGalleryImages.length <= 1) return;
+    currentImageIndex = (currentImageIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length;
+    updateModalImage();
+  }
+
+  // Événements sur les boutons de navigation
+  if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); prevImage(); });
+  if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); nextImage(); });
+
+  // Navigation au clavier (Flèches et Échap)
+  document.addEventListener('keydown', (e) => {
+    if (modal && modal.classList.contains('is-open')) {
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
+      if (e.key === 'Escape') closeGallery();
+    }
+  });
+
+  // Attacher le clic sur tous les articles
   document.querySelectorAll('.project-card').forEach(card => {
     card.addEventListener('click', openGallery);
   });
 
-  // Close on X button
+  // Fermer via le bouton de fermeture
   if (closeBtn) {
     closeBtn.addEventListener('click', closeGallery);
   }
 
-  // Also close when clicking outside the image (on the overlay)
+  // Fermer en cliquant à l'extérieur de l'image (sur l'overlay sombre)
   if (modal) {
     modal.addEventListener('click', (e) => {
       if (e.target === modal) closeGallery();
