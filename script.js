@@ -181,53 +181,88 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalImg = document.getElementById('gallery-img');
   const modalCaption = document.getElementById('gallery-caption');
   const closeBtn = modal ? modal.querySelector('.close-btn') : null;
+  const prevBtn = document.getElementById('gallery-prev');
+  const nextBtn = document.getElementById('gallery-next');
+  const thumbsContainer = document.getElementById('gallery-thumbnails');
 
   // Variables pour suivre la galerie active
   let currentGalleryImages = [];
   let currentImageIndex = 0;
 
-  // Création dynamique des boutons Précédent / Suivant si non présents
-  let prevBtn = modal ? modal.querySelector('.prev-btn') : null;
-  let nextBtn = modal ? modal.querySelector('.next-btn') : null;
-
-  if (modal && (!prevBtn || !nextBtn)) {
-    prevBtn = document.createElement('button');
-    prevBtn.className = 'gallery-nav prev-btn';
-    prevBtn.innerHTML = '&#10094;'; // Flèche gauche ❮
-    prevBtn.style.cssText = 'position:absolute; left:20px; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.5); color:white; border:none; font-size:2rem; padding:10px 15px; cursor:pointer; border-radius:4px; z-index:10000;';
-
-    nextBtn = document.createElement('button');
-    nextBtn.className = 'gallery-nav next-btn';
-    nextBtn.innerHTML = '&#10095;'; // Flèche droite ❯
-    nextBtn.style.cssText = 'position:absolute; right:20px; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.5); color:white; border:none; font-size:2rem; padding:10px 15px; cursor:pointer; border-radius:4px; z-index:10000;';
-
-    modal.appendChild(prevBtn);
-    modal.appendChild(nextBtn);
-  }
-
   // Mettre à jour l'image affichée dans le modal
-  function updateModalImage() {
+  function updateModalImage(animate = true) {
     if (!modalImg || currentGalleryImages.length === 0) return;
 
     const currentPath = currentGalleryImages[currentImageIndex];
-    modalImg.src = currentPath;
 
-    // Met à jour la légende (ex: "Rénovation Salon (1/3)")
-    if (modalCaption) {
-      const baseCaption = modalCaption.dataset.baseTitle || '';
-      modalCaption.textContent = `${baseCaption} (${currentImageIndex + 1}/${currentGalleryImages.length})`;
+    if (animate) {
+      modalImg.style.opacity = '0.3';
+      modalImg.style.transform = 'scale(0.98)';
+      setTimeout(() => {
+        modalImg.src = currentPath;
+        modalImg.style.opacity = '1';
+        modalImg.style.transform = 'scale(1)';
+      }, 120);
+    } else {
+      modalImg.src = currentPath;
     }
 
-    // Masquer les flèches s'il n'y a qu'une seule image
-    const displayStyle = currentGalleryImages.length > 1 ? 'block' : 'none';
+    // Met à jour la légende
+    if (modalCaption) {
+      const baseCaption = modalCaption.dataset.baseTitle || '';
+      if (currentGalleryImages.length > 1) {
+        modalCaption.textContent = `${baseCaption} (${currentImageIndex + 1} / ${currentGalleryImages.length})`;
+      } else {
+        modalCaption.textContent = baseCaption;
+      }
+    }
+
+    // Affichage des flèches
+    const displayStyle = currentGalleryImages.length > 1 ? 'flex' : 'none';
     if (prevBtn) prevBtn.style.display = displayStyle;
     if (nextBtn) nextBtn.style.display = displayStyle;
+
+    // Mise à jour des miniatures actives
+    if (thumbsContainer) {
+      const allThumbs = thumbsContainer.querySelectorAll('.gallery-thumb');
+      allThumbs.forEach((thumb, idx) => {
+        thumb.classList.toggle('active', idx === currentImageIndex);
+        if (idx === currentImageIndex) {
+          thumb.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+      });
+    }
   }
 
-  // Ouvrir le modal en lisant la liste d'images personnalisée (100% compatible file://)
+  // Rendu des miniatures
+  function renderThumbnails() {
+    if (!thumbsContainer) return;
+    thumbsContainer.innerHTML = '';
+
+    if (currentGalleryImages.length <= 1) {
+      thumbsContainer.style.display = 'none';
+      return;
+    }
+
+    thumbsContainer.style.display = 'flex';
+    currentGalleryImages.forEach((imgSrc, idx) => {
+      const thumb = document.createElement('img');
+      thumb.src = imgSrc;
+      thumb.alt = `Miniature ${idx + 1}`;
+      thumb.className = `gallery-thumb ${idx === currentImageIndex ? 'active' : ''}`;
+      thumb.addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentImageIndex = idx;
+        updateModalImage();
+      });
+      thumbsContainer.appendChild(thumb);
+    });
+  }
+
+  // Ouvrir le modal
   function openGallery(event) {
     const card = event.currentTarget;
-    const galleryData = card.dataset.gallery; // Récupère la liste d'images
+    const galleryData = card.dataset.gallery;
     const mainImg = card.querySelector('img');
     if (!mainImg) return;
 
@@ -235,26 +270,32 @@ document.addEventListener('DOMContentLoaded', () => {
     currentImageIndex = 0;
 
     if (modalCaption) {
-      modalCaption.dataset.baseTitle = mainImg.alt || card.dataset.title || '';
+      modalCaption.dataset.baseTitle = card.dataset.title || (card.querySelector('h3') ? card.querySelector('h3').textContent : '') || mainImg.alt || '';
     }
 
     if (galleryData) {
-      // Découpe la chaîne séparée par des virgules en tableau JavaScript
-      currentGalleryImages = galleryData.split(',').map(src => src.trim());
+      currentGalleryImages = galleryData.split(',').map(src => src.trim()).filter(Boolean);
     }
 
-    // Si aucun data-gallery, on utilise l'image de couverture comme seule image
+    // Si aucun data-gallery ou vide, on utilise l'image de la carte
     if (currentGalleryImages.length === 0) {
-      currentGalleryImages = [mainImg.src];
+      currentGalleryImages = [mainImg.getAttribute('src') || mainImg.src];
     }
 
-    updateModalImage();
+    renderThumbnails();
+    updateModalImage(false);
 
-    if (modal) modal.classList.add('is-open');
+    if (modal) {
+      modal.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
   }
 
   function closeGallery() {
-    if (modal) modal.classList.remove('is-open');
+    if (modal) {
+      modal.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
   }
 
   // Fonctions de navigation
@@ -283,20 +324,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Attacher le clic sur tous les articles
+  // Attacher le clic sur tous les articles de projets
   document.querySelectorAll('.project-card').forEach(card => {
     card.addEventListener('click', openGallery);
   });
 
-  // Fermer via le bouton de fermeture
+  // Fermer via la croix
   if (closeBtn) {
-    closeBtn.addEventListener('click', closeGallery);
+    closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeGallery();
+    });
   }
 
-  // Fermer en cliquant à l'extérieur de l'image (sur l'overlay sombre)
+  // Fermer en cliquant sur le fond sombre
   if (modal) {
     modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeGallery();
+      if (e.target === modal || e.target.classList.contains('modal-image-wrapper')) {
+        closeGallery();
+      }
     });
   }
 

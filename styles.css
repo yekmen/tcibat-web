@@ -786,57 +786,59 @@ ul { list-style: none; }
 }
 
 .partners-track {
-  display: flex; gap: 32px;
+  display: flex;
+  gap: 24px;
   align-items: center;
-  animation: scroll-partners 28s linear infinite;
+  animation: scroll-partners 42s linear infinite;
+  will-change: transform;
 }
-.partners-track:hover { animation-play-state: paused; }
+.partners-track:hover {
+  animation-play-state: paused;
+}
 
 .partner-card {
-  flex: 0 0 200px; height: 100px;
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.1);
+  flex: 0 0 190px;
+  height: 90px;
+  background: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: var(--radius);
-  display: flex; align-items: center; justify-content: center;
-  padding: 12px;
-  transition: var(--transition);
-  cursor: pointer;
-}
-.partner-card:hover {
-  background: rgba(255,255,255,.12);
-  border-color: var(--coral);
-  transform: translateY(-3px);
-}
-.partner-logo-placeholder {
-  width: 100%; height: 100%;
-  display: flex; align-items: center; justify-content: center;
-}
-
-/* Style pour le lien ou SVG dans le logo partenaire */
-.partner-svg-logo {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
-  text-decoration: none;
+  padding: 12px 18px;
+  transition: var(--transition);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
 }
 
-/* Logos images partenaires */
-.partner-logo-placeholder img,
-.partner-svg-logo img {
-  max-width: 140px;
-  max-height: 50px;
+.partner-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(232, 88, 74, 0.25);
+  border-color: var(--coral);
+}
+
+.partner-logo-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Logos images partenaires : aspect-ratio respecté sans déformation */
+.partner-logo-placeholder img {
+  max-width: 100%;
+  max-height: 100%;
   width: auto;
   height: auto;
   object-fit: contain;
-  filter: brightness(0) invert(1);
-  opacity: .7;
-  transition: opacity var(--transition);
+  filter: grayscale(10%) contrast(1.05);
+  transition: transform var(--transition), filter var(--transition);
 }
-.partner-card:hover .partner-logo-placeholder img,
-.partner-card:hover .partner-svg-logo img {
-  opacity: 1;
+
+.partner-card:hover .partner-logo-placeholder img {
+  transform: scale(1.06);
+  filter: grayscale(0%) contrast(1.1);
 }
 
 .partner-svg-logo svg {
@@ -1039,16 +1041,18 @@ ul { list-style: none; }
 .modal {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.88);
+  background: rgba(10, 18, 36, 0.95);
+  backdrop-filter: blur(10px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 30px 20px 20px;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 10000;
+  user-select: none;
 }
 
 .modal.is-open {
@@ -1056,29 +1060,158 @@ ul { list-style: none; }
   pointer-events: auto;
 }
 
-.modal.hidden {
-  display: none;
-}
-
 .modal .close-btn {
   position: absolute;
   top: 20px;
-  right: 30px;
-  font-size: 2rem;
-  color: #fff;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
   cursor: pointer;
+  padding: 0;
+  transition: var(--transition);
+  z-index: 10002;
+  outline: none;
+}
+
+.modal .close-btn svg {
+  display: block;
+  pointer-events: none;
+  transition: transform 0.25s ease;
+}
+
+.modal .close-btn:hover {
+  color: var(--white);
+  background: var(--coral);
+  border-color: var(--coral);
+}
+
+.modal .close-btn:hover svg {
+  transform: rotate(90deg);
+}
+
+.modal-image-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 88vw;
+  max-height: 72vh;
 }
 
 .modal img.modal-content {
-  max-width: 90vw;
-  max-height: 80vh;
-  border-radius: 8px;
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+  max-width: 100%;
+  max-height: 65vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
 .modal #gallery-caption {
-  color: rgba(255, 255, 255, 0.8);
-  margin-top: 16px;
-  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 14px;
+  font-size: 0.98rem;
+  font-weight: 500;
   text-align: center;
+  letter-spacing: 0.02em;
+}
+
+/* Flèches de navigation */
+.gallery-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 1.8rem;
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: var(--transition);
+  z-index: 10001;
+  outline: none;
+}
+
+.gallery-nav:hover {
+  background: var(--coral);
+  border-color: var(--coral);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.prev-btn {
+  left: 24px;
+}
+
+.next-btn {
+  right: 24px;
+}
+
+/* Miniatures en bas */
+.gallery-thumbnails {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  overflow-x: auto;
+  max-width: 80vw;
+  padding: 8px 4px;
+  scrollbar-width: thin;
+}
+
+.gallery-thumbnails:empty {
+  display: none;
+}
+
+.gallery-thumb {
+  width: 60px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  opacity: 0.5;
+  border: 2px solid transparent;
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+
+.gallery-thumb:hover {
+  opacity: 0.85;
+}
+
+.gallery-thumb.active {
+  opacity: 1;
+  border-color: var(--coral);
+  transform: scale(1.06);
+}
+
+@media (max-width: 768px) {
+  .gallery-nav {
+    width: 42px;
+    height: 42px;
+    font-size: 1.3rem;
+  }
+  .prev-btn { left: 10px; }
+  .next-btn { right: 10px; }
+  .modal-image-wrapper {
+    max-width: 94vw;
+    max-height: 70vh;
+  }
+  .modal img.modal-content {
+    max-height: 55vh;
+  }
 }
