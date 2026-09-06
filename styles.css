@@ -1102,37 +1102,12 @@ ul {
   position: relative;
 }
 
-.partners-track-wrapper::before,
-.partners-track-wrapper::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 120px;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.partners-track-wrapper::before {
-  left: 0;
-  background: linear-gradient(to right, var(--navy), transparent);
-}
-
-.partners-track-wrapper::after {
-  right: 0;
-  background: linear-gradient(to left, var(--navy), transparent);
-}
-
 .partners-track {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 24px;
   align-items: center;
-  animation: scroll-partners 42s linear infinite;
-  will-change: transform;
-}
-
-.partners-track:hover {
-  animation-play-state: paused;
 }
 
 .partner-card {
